@@ -30,7 +30,17 @@ module.exports = async function (context, req) {
                 embed.setTitle("Ping")
                 .setDescription(req.body.zen)
                 .setColor('#cacaca')
-            }
+            } else if (req.body.commits) {
+                var commits = "";
+                req.body.commits.forEach(commit => {
+                    const timestamp = new Date(commit.timestamp).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric', timeZone: "PST" });
+                    const commitIDString = `[\`${commit.id.slice(6)}\`](${commit.url})`;
+                    const committerString =  `[${commit.committer.name}](https://github.com/${commit.committer.username})`
+                    commits = commits.concat(`**[${timestamp}]${commitIDString}:** ${committerString} - ${commit.message}\n`);
+                });
+                embed.setTitle(`${req.body.commits.length} New Commits`)
+                embed.setDescription(commits);
+            } 
 
             /**
              * response[0] = status code
