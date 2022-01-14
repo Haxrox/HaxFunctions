@@ -15,7 +15,7 @@ module.exports = async function (context, req) {
         return;
     } 
 
-    if (event != null) {
+    if (event == null) {
         context.res = {
             status: 400, /* Defaults to 200 */
             body: "Invalid event"
