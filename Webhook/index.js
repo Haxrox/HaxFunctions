@@ -40,11 +40,12 @@ module.exports = async function (context, req) {
         .setTimestamp(req.body.pushed_at || Date.now())
         .setFooter({text: `Sender: ${req.body.sender.login || "Anonymous"}`, iconURL: req.body.sender.avatar_url});
 
-    if (event.toUpperCase() == "PING") {
+    event = event.toUpperCase();
+    if (event == "PING") {
         embed.setTitle("Ping")
-        .setDescription(req.body.zen || "Rip zen")
-        .setColor('#cacaca');
-    } else if (event.toUpperCase() == "PUSH") {
+            .setDescription(req.body.zen || "Rip zen")
+            .setColor('#cacaca');
+    } else if (event == "PUSH") {
         if (req.body.commits) {
             if (req.body.commits.length <= 0) {
                 context.res = {
@@ -61,27 +62,27 @@ module.exports = async function (context, req) {
                 commits = commits.concat(`**[${timestamp}] ${commitIDString}: ${committerString}** - ${commit.message}\n`);
             });
             embed.setTitle(`${branch}: ${req.body.commits.length} New Commits`)
-            .setDescription(commits)
-            .setColor("#3498db");
+                .setDescription(commits)
+                .setColor("#3498db");
         } else {
             embed.setTitle("Unknown push event")
-            .setDescription(`**Action:** ${req.body.action}\n**Ref:** ${req.body.ref}\n**Ref_type:** ${req.body.ref_type}`)
-            .setColor("#dd2e44");
+                .setDescription(`**Action:** ${req.body.action}\n**Ref:** ${req.body.ref}\n**Ref_type:** ${req.body.ref_type}`)
+                .setColor("#dd2e44");
         }
     } else if (event == "CREATE" || event == "DELETE") {
         if (req.body.ref_type && req.body.ref_type.toUpperCase() == "BRANCH") {
             embed.setTitle(`Branch ${event}d`)
-            .setDescription(`**Branch: [\`${req.body.ref}\`](${req.body.html_url})/tree/${req.body.ref})**`)
-            .setColor(event == "CREATE" ? "#78b159" : "#dd2e44");
+                .setDescription(`**Branch: [\`${req.body.ref}\`](${req.body.html_url})/tree/${req.body.ref})**`)
+                .setColor(event == "CREATE" ? "#78b159" : "#dd2e44");
         } else {
             embed.setTitle(`Unknown ${event} event`)
-            .setDescription(`**Action:** ${req.body.action}\n**Ref:** ${req.body.ref}\n**Ref_type:** ${req.body.ref_type}`)
-            .setColor("#dd2e44");
+                .setDescription(`**Action:** ${req.body.action}\n**Ref:** ${req.body.ref}\n**Ref_type:** ${req.body.ref_type}`)
+                .setColor("#dd2e44");
         }
     } else {
         embed.setTitle("Unknown event")
-        .setDescription(`**Event:** ${event}\n**Action:** ${req.body.action}\n**Ref:** ${req.body.ref}\n**Ref_type:** ${req.body.ref_type}`)
-        .setColor("#dd2e44");
+            .setDescription(`**Event:** ${event}\n**Action:** ${req.body.action}\n**Ref:** ${req.body.ref}\n**Ref_type:** ${req.body.ref_type}`)
+            .setColor("#dd2e44");
     }
 
     /**
