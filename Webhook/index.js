@@ -19,7 +19,7 @@ module.exports = async function (context, req) {
     if (userAgent.toUpperCase().startsWith("GITHUB-HOOKSHOT")) {
         if (req.body && req.body.repository) {
             const embed = new MessageEmbed()
-            .setAuthor({name: req.body.repository.name || "Github Repository", iconURL: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png", url: req.body.repository.html_url || "https://github.com/"})
+            .setAuthor({name: req.body.repository.full_name || "Github Repository", iconURL: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png", url: req.body.repository.html_url || "https://github.com/"})
             .setTitle("Webhook")
             .setURL(req.body.repository.html_url || "https://github.com/")
             .setDescription("Test")
@@ -38,9 +38,16 @@ module.exports = async function (context, req) {
                     const committerString =  `[${commit.committer.name}](https://github.com/${commit.committer.username})`
                     commits = commits.concat(`**[${timestamp}]${commitIDString}:** ${committerString} - ${commit.message}\n`);
                 });
-                embed.setTitle(`${req.body.commits.length} New Commits`)
-                embed.setDescription(commits);
-            } 
+                const branch = req.body.ref.slice(11);
+                embed.setTitle(`${branch}: ${req.body.commits.length} New Commits`)
+                .setDescription(commits);
+            } else if (req.body.ref_type && req.body.ref_type.toUpperCase() == "BRANCH") {
+                embed.setTitle("Branch created")
+                .setDescription(`**Branch: [\`${req.body.ref}\`](${req.body.html_url})/tree/${req.body.ref}**`)
+            } else {
+                embed.setTitle("Unknown event")
+                .setDescription(`**Action:** ${req.body.action}\n**Ref:** ${req.body.ref}\n**Ref_type:** ${req.body.ref_type}`);
+            }
 
             /**
              * response[0] = status code
