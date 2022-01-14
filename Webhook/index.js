@@ -18,10 +18,12 @@ module.exports = async function (context, req) {
     
     if (userAgent.toUpperCase().startsWith("GITHUB-HOOKSHOT")) {
         if (req.body && req.body.repository) {
+            const branch = req.body.ref.slice(11);
+
             const embed = new MessageEmbed()
             .setAuthor({name: req.body.repository.full_name || "Github Repository", iconURL: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png", url: req.body.repository.html_url || "https://github.com/"})
             .setTitle("Webhook")
-            .setURL(req.body.repository.html_url || "https://github.com/")
+            .setURL(`${req.body.repository.html_url}/tree/${branch}` || "https://github.com/")
             .setDescription("Test")
             .setTimestamp(req.body.pushed_at || Date.now())
             .setFooter({text: `Sender: ${req.body.sender.login || "Anonymous"}`, iconURL: req.body.sender.avatar_url});
@@ -36,9 +38,8 @@ module.exports = async function (context, req) {
                     const timestamp = new Date(commit.timestamp).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric', timeZone: "PST" });
                     const commitIDString = `[\`${commit.id.slice(6)}\`](${commit.url})`;
                     const committerString =  `[${commit.committer.name}](https://github.com/${commit.committer.username})`
-                    commits = commits.concat(`**[${timestamp}]${commitIDString}:** ${committerString} - ${commit.message}\n`);
+                    commits = commits.concat(`**[${timestamp}] ${commitIDString}: ${committerString}** - ${commit.message}\n`);
                 });
-                const branch = req.body.ref.slice(11);
                 embed.setTitle(`${branch}: ${req.body.commits.length} New Commits`)
                 .setDescription(commits)
                 .setColor("#78b159");
