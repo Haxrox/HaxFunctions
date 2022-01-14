@@ -23,7 +23,7 @@ module.exports = async function (context, req) {
         return;
     } 
 
-    if (!(req.body && req.body.repository)) {
+    if (!(req.body && req.body.repository && req.body.ref)) {
         context.res = {
             status: 400, /* Defaults to 200 */
             body: "Invalid body"
@@ -31,6 +31,7 @@ module.exports = async function (context, req) {
         return;
     } 
 
+    const branch = req.body.ref.slice(11);
     const embed = new MessageEmbed()
         .setAuthor({name: req.body.repository.full_name || "Github Repository", iconURL: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png", url: req.body.repository.html_url || "https://github.com/"})
         .setTitle("Webhook")
@@ -44,7 +45,6 @@ module.exports = async function (context, req) {
         .setDescription(req.body.zen || "Rip zen")
         .setColor('#cacaca');
     } else if (event.toUpperCase() == "PUSH") {
-        const branch = req.body.ref.slice(11);
         if (req.body.commits) {
             if (req.body.commits.length <= 0) {
                 context.res = {
