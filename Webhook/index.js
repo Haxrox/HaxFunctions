@@ -56,7 +56,7 @@ module.exports = async function (context, req) {
             var commits = "";
             req.body.commits.forEach(commit => {
                 const timestamp = new Date(commit.timestamp).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric', timeZone: "PST" });
-                const commitIDString = `[\`${commit.id.slice(6)}\`](${commit.url})`;
+                const commitIDString = `[\`${commit.id.slice(0, 6)}\`](${commit.url})`;
                 const committerString =  `[${commit.committer.name}](https://github.com/${commit.committer.username})`
                 commits = commits.concat(`**[${timestamp}] ${commitIDString}: ${committerString}** - ${commit.message}\n`);
             });
