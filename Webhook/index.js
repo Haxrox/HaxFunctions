@@ -4,8 +4,7 @@ const webhookClient = new WebhookClient({ url: "https://discord.com/api/webhooks
 
 module.exports = async function (context, req) {
     const userAgent = req.headers["user-agent"] || req.headers["User-Agent"] || req.headers["user-Agent"] || ""; // unsure about casing
-    const event = req.headers["x-github-event"];
-    console.log("Event: " + event);
+    var event = req.headers["x-github-event"];
     
     if (!userAgent.toUpperCase().startsWith("GITHUB-HOOKSHOT")) {
         context.res = {
