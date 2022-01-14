@@ -40,13 +40,16 @@ module.exports = async function (context, req) {
                 });
                 const branch = req.body.ref.slice(11);
                 embed.setTitle(`${branch}: ${req.body.commits.length} New Commits`)
-                .setDescription(commits);
+                .setDescription(commits)
+                .setColor("#78b159");
             } else if (req.body.ref_type && req.body.ref_type.toUpperCase() == "BRANCH") {
                 embed.setTitle("Branch created")
                 .setDescription(`**Branch: [\`${req.body.ref}\`](${req.body.html_url})/tree/${req.body.ref}**`)
+                .setColor("#3498db");
             } else {
                 embed.setTitle("Unknown event")
-                .setDescription(`**Action:** ${req.body.action}\n**Ref:** ${req.body.ref}\n**Ref_type:** ${req.body.ref_type}`);
+                .setDescription(`**Action:** ${req.body.action}\n**Ref:** ${req.body.ref}\n**Ref_type:** ${req.body.ref_type}`)
+                .setColor("#dd2e44");
             }
 
             /**
