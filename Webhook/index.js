@@ -60,7 +60,7 @@ module.exports = async function (context, req) {
                 const committerString =  `[${commit.committer.name}](https://github.com/${commit.committer.username})`
                 commits = commits.concat(`**[${timestamp}] ${commitIDString}: ${committerString}** - ${commit.message}\n`);
             });
-            embed.setTitle(`${branch}: ${req.body.commits.length} New Commits`)
+            embed.setTitle(`${branch}: ${req.body.commits.length} new commits`)
                 .setDescription(commits)
                 .setColor("#3498db");
         } else {
@@ -70,11 +70,11 @@ module.exports = async function (context, req) {
         }
     } else if (event == "CREATE" || event == "DELETE") {
         if (req.body.ref_type && req.body.ref_type.toUpperCase() == "BRANCH") {
-            embed.setTitle(`Branch ${event}d`)
-                .setDescription(`**Branch: [\`${req.body.ref}\`](${req.body.html_url})/tree/${req.body.ref})**`)
+            embed.setTitle(`Branch ${event.toLowerCase()}d`)
+                .setDescription(`**Branch: [\`${req.body.ref}\`](${req.body.html_url}/tree/${req.body.ref})**`)
                 .setColor(event == "CREATE" ? "#78b159" : "#dd2e44");
         } else {
-            embed.setTitle(`Unknown ${event} event`)
+            embed.setTitle(`Unknown ${event.toLowerCase()} event`)
                 .setDescription(`**Action:** ${req.body.action}\n**Ref:** ${req.body.ref}\n**Ref_type:** ${req.body.ref_type}`)
                 .setColor("#dd2e44");
         }
