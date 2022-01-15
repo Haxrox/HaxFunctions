@@ -22,7 +22,7 @@ module.exports = async function (context, req) {
         return;
     } 
 
-    if (!(req.body && req.body.repository && req.body.ref)) {
+    if (!(req.body && req.body.repository)) {
         context.res = {
             status: 400, /* Defaults to 200 */
             body: "Invalid body"
@@ -30,7 +30,7 @@ module.exports = async function (context, req) {
         return;
     } 
 
-    const branch = req.body.ref.slice(11);
+    const branch = req.body.ref != null ? req.body.ref.slice(11) : req.body.repository.default_branch;
     const embed = new MessageEmbed()
         .setAuthor({name: req.body.repository.full_name || "Github Repository", iconURL: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png", url: req.body.repository.html_url || "https://github.com/"})
         .setTitle("Webhook")
@@ -60,7 +60,7 @@ module.exports = async function (context, req) {
                 const committerString =  `[${commit.committer.name}](https://github.com/${commit.committer.username})`
                 commits = commits.concat(`**[${timestamp}] ${commitIDString}: ${committerString}** - ${commit.message}\n`);
             });
-            embed.setTitle(`${branch}: ${req.body.commits.length} new commits`)
+            embed.setTitle(`${branch}: ${req.body.commits.length} new commit(s)`)
                 .setDescription(commits)
                 .setColor("#3498db");
         } else {
