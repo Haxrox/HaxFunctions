@@ -1,6 +1,7 @@
 const {WebhookClient, MessageEmbed} = require('discord.js');
+const Configuration = require("./config.json");
 
-const webhookClient = new WebhookClient({ url: "https://discord.com/api/webhooks/931337902179385414/v4UTEXoneseXp5EzzM894qgEGbF2D6Gxa6RBWCWDS24KIevQpHe38gjBqufvr46c9IVv"});
+const webhookClient = new WebhookClient({ url: Configuration.WEBHOOK_URL});
 
 module.exports = async function (context, req) {
     const userAgent = req.headers["user-agent"] || req.headers["User-Agent"] || req.headers["user-Agent"] || ""; // unsure about casing
@@ -91,7 +92,7 @@ module.exports = async function (context, req) {
     const response = await webhookClient.send({embeds: [embed]}).then(() => {
         return [200, "Successfully sent"];
     }).catch((error) => {
-        console.error(error);
+        console.log(error);
         return [500, "Failed to send"]
     });
 
