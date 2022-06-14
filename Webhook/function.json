@@ -4,9 +4,8 @@
       "authLevel": "anonymous",
       "type": "httpTrigger",
       "direction": "in",
-      "name": "req",
+      "name": "webhook-post",
       "methods": [
-        "get",
         "post"
       ]
     },
