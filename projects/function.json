@@ -4,10 +4,9 @@
       "authLevel": "anonymous",
       "type": "httpTrigger",
       "direction": "in",
-      "name": "req",
+      "name": "projects-get-all",
       "methods": [
-        "get",
-        "post"
+        "get"
       ]
     },
     {
