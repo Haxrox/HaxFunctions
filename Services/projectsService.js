@@ -23,15 +23,15 @@ class ProjectService {
 
     async getDetailedProject(context) {
         try {
-            const project = req.params.name ? PROJECTS_DATA.filter(project => project.title.toUpperCase() === context.req.params.name.toUpperCase())[0] : req.params.index ? PROJECTS_DATA[index] : null;
+            const project = context.req.params.name ? PROJECTS_DATA.filter(project => project.title.toUpperCase() === context.req.params.name.toUpperCase())[0] : context.req.params.index ? PROJECTS_DATA[context.req.params.index] : null;
 
             if (project) {
-                throw new DatabaseError(`Project: ${context.req.params.name} not found in database`);
-            }   
-
-            context.res.status(200).json(project);
+                context.res.status(200).json(project);
+            } else {
+                context.res.status(404).send(new DatabaseError(`Project: ${context.req.params.name} or ${context.req.params.index} not found in database`));
+            }
         } catch (exception) {
-            context.res.status(404).send(exception);
+            context.res.status(500).send(exception);
         }
     }
 }
