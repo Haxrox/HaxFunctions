@@ -103,9 +103,10 @@ module.exports = [
         shortDescription: "Portfolio with all my personal projects",
         tasks: [
             "Implemented MaterialUI library for frontend design",
-            "Configured react-router-dom for page navigation"
+            "Configured react-router-dom for page navigation",
+            "Created backend endpoints on Microsoft Azure Cloud Functions for project database"
         ],
-        techStack: ['React', 'JavaScript', 'Firebase Hosting', 'GitHub Actions'],
+        techStack: ['React', 'JavaScript', 'Firebase Hosting', 'GitHub Actions', 'Microsoft Azure Cloud Functions'],
         url: [
             {
                 type: "GitHub",
@@ -114,6 +115,10 @@ module.exports = [
             {
                 type: "Web",
                 href: "https://haxtech.web.app/"
+            },
+            {
+                type: "Backend",
+                href: "https://haxtech.azurewebsites.net/api/ping"
             }
         ]
     },
@@ -230,7 +235,7 @@ module.exports = [
             {
                 type: "Android",
                 href: "apks/BleAudio.apk",
-                tooltip: "Android Application APK"
+                tooltip: "Android APK"
             }
         ]
     },
