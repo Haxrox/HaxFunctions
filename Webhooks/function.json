@@ -4,10 +4,11 @@
       "authLevel": "anonymous",
       "type": "httpTrigger",
       "direction": "in",
-      "name": "webhook-post",
+      "name": "webhook",
       "methods": [
         "post"
-      ]
+      ],
+      "route": "webhooks"
     },
     {
       "type": "http",
