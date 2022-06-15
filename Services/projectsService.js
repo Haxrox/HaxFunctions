@@ -11,7 +11,7 @@ class ProjectService {
         
         PROJECTS_DATA.forEach(project => response.push({
             title: project.title,
-            data: project.date,
+            date: project.date,
             type: project.type,
             shortDescription: project.shortDescription,
             techStack: project.techStack,
