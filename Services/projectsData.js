@@ -1,4 +1,4 @@
-const PROJECTS = [
+module.exports = [
     {
         title: "HaxRover",
         date: "May 2022 - Present",
@@ -282,5 +282,3 @@ const PROJECTS = [
         ]
     }
 ];
-
-export default PROJECTS;

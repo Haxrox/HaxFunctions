@@ -4,11 +4,11 @@
       "authLevel": "anonymous",
       "type": "httpTrigger",
       "direction": "in",
-      "name": "Projects",
+      "name": "req",
       "methods": [
         "get"
       ],
-      "route": "projects"
+      "route": "projects/detailed/{name}"
     },
     {
       "type": "http",
