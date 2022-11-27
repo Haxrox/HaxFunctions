@@ -6,6 +6,10 @@
     "start": "func start",
     "test": "echo \"No tests yet...\""
   },
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/Haxrox/HaxFunctions"
+    },
   "dependencies": {
     "discord.js": "^13.6.0"
   }
