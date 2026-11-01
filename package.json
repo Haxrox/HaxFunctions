@@ -11,6 +11,6 @@
       "url": "https://github.com/Haxrox/HaxFunctions"
     },
   "dependencies": {
-    "discord.js": "^13.6.0"
+    "discord.js": "^13.17.1"
   }
 }
